@@ -86,6 +86,21 @@ public class AppMainController {
                     }
                 }
 
+                if (splited.get(0).equals("makeTransfer")) {
+                    this.processCreditAccountCommand(line, line);
+                    if (splited.size() == 4) {
+                        System.out.println("passou a validacao da transferencia de conta...vai transferir");
+                        String sourceAccountName = splited.get(1);
+                        String targetAccountName = splited.get(2);
+                        String value = splited.get(3);
+                        this.processTransferCommand(sourceAccountName, targetAccountName, value);
+                    } else {
+                        System.out.println("regras de utilizacao do create account:");
+                        System.out.println("createAccount <name> <address> <phone_number> <balance>");
+
+                    }
+                }
+
 //                System.out.print("Enter Integer:");
 //                int i = Integer.parseInt(br.readLine());
             }
@@ -143,9 +158,35 @@ public class AppMainController {
         Account account = hashAccounts.get(name);
         if (account != null) {
             System.out.println("Encontrei nenhuma conta com esse valor!!!");
-            account.getBalance();
+            BigDecimal valueBigDecimal = convertStringToBigDecimal(value);
+            BigDecimal sum = account.getBalance().add(valueBigDecimal);
+            account.setBalance(sum);
         } else {
             System.out.println("NÃO encontrei nenhuma conta com esse valor");
+        }
+        System.out.println("Account Sucessfully Credited!");
+    }
+
+    private void processTransferCommand(String sourceAccountName, String targetAccountName, String value) {
+        System.out.println("entrou no processCreditAccountCommand com os seguintes inputs:");
+        System.out.println("name:" + sourceAccountName);
+        System.out.println("targetAccountName:" + targetAccountName);
+        System.out.println("value:" + value);
+        Account sourceAccount = hashAccounts.get(sourceAccountName);
+        Account targetAccount = hashAccounts.get(targetAccountName);
+        if (sourceAccount != null && targetAccount != null) {
+            System.out.println("Encontrei  conta com esse nomes!!!");
+            BigDecimal valueBigDecimal = convertStringToBigDecimal(value);
+            
+            BigDecimal sourceNewBallance = sourceAccount.getBalance().subtract(valueBigDecimal);
+            sourceAccount.setBalance(sourceNewBallance);
+
+            BigDecimal targetNewBallance = targetAccount.getBalance().add(valueBigDecimal);
+            targetAccount.setBalance(targetNewBallance);
+        } else {
+            if (sourceAccount == null) {
+                System.out.println("NÃO encontrei nenhuma conta origem com esse nome");
+            }
         }
         System.out.println("Account Sucessfully Credited!");
     }
