@@ -6,6 +6,7 @@
 package brandtone.bankingapp;
 
 import brandtone.bankingapp.domainmodel.Account;
+import brandtone.bankingapp.domainmodel.Transaction;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,10 +27,13 @@ import java.util.regex.Pattern;
  */
 public class AppMainController {
 
-    private HashMap<String, Account> hashAccounts;
+    private HashMap<String, Account> accountsHashMap;
+
+    private ArrayList<Transaction> transactionsArray;
 
     public AppMainController() {
-        this.hashAccounts = new HashMap<String, Account>();
+        this.accountsHashMap = new HashMap<String, Account>();
+        this.transactionsArray = new ArrayList<Transaction>();
     }
 
     public void run() {
@@ -49,10 +53,8 @@ public class AppMainController {
             while ((line = br.readLine()) != null) {
                 // String s = br.readLine();
                 System.out.println("String inserida: " + line);
-
                 List<String> splited = this.splitCommandIntoArray2(line);
                 System.out.println("array:" + splited);
-
                 if (splited.get(0).equals("createAccount")) {
                     if (splited.size() == 5) {
                         System.out.println("passou a validacao da conta...vai criar");
@@ -64,7 +66,6 @@ public class AppMainController {
                     } else {
                         System.out.println("regras de utilizacao do create account:");
                         System.out.println("createAccount <name> <address> <phone_number> <balance>");
-
                     }
                 }
 
@@ -101,6 +102,10 @@ public class AppMainController {
                     }
                 }
 
+                if (splited.get(0).equals("viewTransactions")) {
+                    this.processViewTransactionsCommand();
+                }
+
 //                System.out.print("Enter Integer:");
 //                int i = Integer.parseInt(br.readLine());
             }
@@ -126,7 +131,7 @@ public class AppMainController {
         account.setName(name);
         account.setPhone_number(phone_number);
 
-        hashAccounts.put(account.getName(), account);
+        accountsHashMap.put(account.getName(), account);
         System.out.println("Account Sucessfully created!");
 
     }
@@ -155,7 +160,7 @@ public class AppMainController {
         System.out.println("name:" + name);
         System.out.println("value:" + value);
 
-        Account account = hashAccounts.get(name);
+        Account account = accountsHashMap.get(name);
         if (account != null) {
             System.out.println("Encontrei nenhuma conta com esse valor!!!");
             BigDecimal valueBigDecimal = convertStringToBigDecimal(value);
@@ -172,12 +177,12 @@ public class AppMainController {
         System.out.println("name:" + sourceAccountName);
         System.out.println("targetAccountName:" + targetAccountName);
         System.out.println("value:" + value);
-        Account sourceAccount = hashAccounts.get(sourceAccountName);
-        Account targetAccount = hashAccounts.get(targetAccountName);
+        Account sourceAccount = accountsHashMap.get(sourceAccountName);
+        Account targetAccount = accountsHashMap.get(targetAccountName);
         if (sourceAccount != null && targetAccount != null) {
             System.out.println("Encontrei  conta com esse nomes!!!");
             BigDecimal valueBigDecimal = convertStringToBigDecimal(value);
-            
+
             BigDecimal sourceNewBallance = sourceAccount.getBalance().subtract(valueBigDecimal);
             sourceAccount.setBalance(sourceNewBallance);
 
@@ -194,22 +199,42 @@ public class AppMainController {
     private void processListAccountsCommand() {
 //        System.out.println("entrou no listAccountsCommand com os seguintes inputs:");
         System.out.println("Name || Address || phone_number || Balance ");
-        Set<String> keys = hashAccounts.keySet();
+        Set<String> keys = accountsHashMap.keySet();
         Iterator keysIt = keys.iterator();
         while (keysIt.hasNext()) {
             String currentKey = (String) keysIt.next();
-            Account currrentAccount = hashAccounts.get(currentKey);
+            Account currrentAccount = accountsHashMap.get(currentKey);
             System.out.println(currrentAccount.getName() + " || " + currrentAccount.getAddress() + " || " + currrentAccount.getPhone_number() + " || " + currrentAccount.getBalance());
 
         }
     }
 
-    public HashMap<String, Account> getHashAccounts() {
-        return hashAccounts;
+    private void processViewTransactionsCommand() {
+//        System.out.println("entrou no listAccountsCommand com os seguintes inputs:");
+        System.out.println("Source Account || Target Account || amount || Date ");
+        Set<String> keys = accountsHashMap.keySet();
+        Iterator keysIt = keys.iterator();
+        while (keysIt.hasNext()) {
+            String currentKey = (String) keysIt.next();
+            Account currrentAccount = accountsHashMap.get(currentKey);
+            System.out.println(currrentAccount.getName() + " || " + currrentAccount.getAddress() + " || " + currrentAccount.getPhone_number() + " || " + currrentAccount.getBalance());
+        }
     }
 
-    public void setHashAccounts(HashMap<String, Account> hashAccounts) {
-        this.hashAccounts = hashAccounts;
+    public HashMap<String, Account> getAccountsHashMap() {
+        return accountsHashMap;
+    }
+
+    public void setAccountsHashMap(HashMap<String, Account> accountsHashMap) {
+        this.accountsHashMap = accountsHashMap;
+    }
+
+    public ArrayList<Transaction> getTransactionsArray() {
+        return transactionsArray;
+    }
+
+    public void setTransactionsArray(ArrayList<Transaction> transactionsArray) {
+        this.transactionsArray = transactionsArray;
     }
 
     public String[] splitCommandIntoArray(String inputString) {
@@ -228,8 +253,6 @@ public class AppMainController {
         while (regexMatcher.find()) {
             matchList.add(regexMatcher.group());
         }
-
         return matchList;
     }
-
 }
