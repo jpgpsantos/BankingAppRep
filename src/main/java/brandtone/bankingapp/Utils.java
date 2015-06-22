@@ -40,7 +40,7 @@ public class Utils {
 
 // parse the string
         BigDecimal bigDecimal = (BigDecimal) decimalFormat.parse(inputMoneyString);
-        System.out.println(bigDecimal);
+     //   System.out.println(bigDecimal);
         return bigDecimal;
 
     }

@@ -66,16 +66,10 @@ public class CreditAccountOperation {
     }
 
     public void executeCommand() {
-
-        if (account != null) {
-            // BigDecimal valueBigDecimal = Utils.convertStringToBigDecimal(value);
-            BigDecimal sum = account.getBalance().add(value);
-            account.setBalance(sum);
-        } else {
-            System.out.println("NÃO encontrei nenhuma conta com esse valor");
-        }
+        // BigDecimal valueBigDecimal = Utils.convertStringToBigDecimal(value);
+        BigDecimal sum = account.getBalance().add(value);
+        account.setBalance(sum);
         System.out.println("Account Sucessfully Credited!");
-
     }
 
     public void printCommandInstructions() {

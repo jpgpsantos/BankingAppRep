@@ -76,7 +76,7 @@ public class MakeTransferOperation {
 
         if (source_account != null && target_account != null && value != null) {
             if (source_account.getBalance().compareTo(value) < 0) {
-                System.out.println("Credit not completed: target account do not exists!");
+                System.out.println("Credit not completed: source account do not have enought balance!");
                 throw new ValidationCommandException();
             }
         }
