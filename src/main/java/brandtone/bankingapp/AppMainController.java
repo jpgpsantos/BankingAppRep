@@ -65,10 +65,8 @@ public class AppMainController {
 
             }
 
-        } catch (NumberFormatException nfe) {
-            System.err.println("Invalid Format!");
-        } catch (IOException ioe) {
-            System.err.println("Invalid Format!");
+        }  catch (IOException ioe) {
+          System.out.println("An IO Exception ocurred");
         }
     }
 

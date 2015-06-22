@@ -39,7 +39,7 @@ public class MakeTransferOperation {
             this.validateCommand();
             this.executeCommand();
         } catch (ParseCommandException parseEx) {
-            System.err.println("Invalid Command Inputs!");
+            System.out.println("Invalid Command Inputs!");
             printCommandInstructions();
         } catch (ValidationCommandException validationEx) {
         }
@@ -73,6 +73,13 @@ public class MakeTransferOperation {
             System.out.println("Credit not completed: target account do not exists!");
             throw new ValidationCommandException();
         }
+
+        if (source_account != null && target_account != null && value != null) {
+            if (source_account.getBalance().compareTo(value) < 0) {
+                System.out.println("Credit not completed: target account do not exists!");
+                throw new ValidationCommandException();
+            }
+        }
     }
 
     public void executeCommand() {
@@ -90,7 +97,7 @@ public class MakeTransferOperation {
 
         AppSession.transactionsArray.add(transaction);
         //END: add transaction to the list
-        
+
         System.out.println("Tranfer executed sucessfully!");
     }
 

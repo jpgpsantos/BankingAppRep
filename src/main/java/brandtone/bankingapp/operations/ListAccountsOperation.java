@@ -29,7 +29,7 @@ public class ListAccountsOperation {
             this.validateCommand();
             this.executeCommand();
         } catch (ParseCommandException parseEx) {
-            System.err.println("Invalid Command Inputs!");
+            System.out.println("Invalid Command Inputs!");
             printCommandInstructions();
         } catch (ValidationCommandException validationEx) {
         }
