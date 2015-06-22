@@ -45,7 +45,7 @@ public class MakeTransferOperation {
         }
     }
 
-    public void parseCommand() throws ParseCommandException {
+    private void parseCommand() throws ParseCommandException {
         if (commandInputs.size() == 4) {
             this.parsed_source_account = commandInputs.get(1);
             this.parsed_target_account = commandInputs.get(2);
@@ -61,7 +61,7 @@ public class MakeTransferOperation {
         }
     }
 
-    public void validateCommand() throws ValidationCommandException {
+    private void validateCommand() throws ValidationCommandException {
 
         this.source_account = AppSession.accountsHashMap.get(parsed_source_account);
         if (source_account == null) {
@@ -82,7 +82,7 @@ public class MakeTransferOperation {
         }
     }
 
-    public void executeCommand() {
+    private void executeCommand() {
         BigDecimal sourceNewBallance = source_account.getBalance().subtract(value);
         source_account.setBalance(sourceNewBallance);
         BigDecimal targetNewBallance = target_account.getBalance().add(value);
@@ -101,7 +101,7 @@ public class MakeTransferOperation {
         System.out.println("Tranfer executed sucessfully!");
     }
 
-    public void printCommandInstructions() {
+    private void printCommandInstructions() {
         System.out.println("---------------------------------------------------------------------");
         System.out.println("- Make Transfer Command:");
         System.out.println("    makeTransfer <sourceaccountname> <targetaccountname> <value>");

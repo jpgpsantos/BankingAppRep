@@ -44,13 +44,13 @@ public class ViewTransactionsOperation {
         }
     }
 
-    public void parseCommand() throws ParseCommandException {
+    private void parseCommand() throws ParseCommandException {
     }
 
-    public void validateCommand() throws ValidationCommandException {
+    private void validateCommand() throws ValidationCommandException {
     }
 
-    public void executeCommand() {
+    private void executeCommand() {
         System.out.println("Source Account || Target Account || amount || Date ");
         Set<String> keys = AppSession.accountsHashMap.keySet();
         Iterator keysIt = keys.iterator();
@@ -67,7 +67,7 @@ public class ViewTransactionsOperation {
         System.out.println("----------------------------------------------------------");
     }
 
-    public void printCommandInstructions() {
+    private void printCommandInstructions() {
         System.out.println("---------------------------------------------------------------------");
         System.out.println("View Transactions Command:");
         System.out.println("    viewTransactions");

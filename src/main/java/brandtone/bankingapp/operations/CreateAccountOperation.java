@@ -67,7 +67,7 @@ public class CreateAccountOperation {
         }
     }
 
-    public void executeCommand() {
+    private void executeCommand() {
         Account account = new Account();
         account.setAddress(address);
 
@@ -79,7 +79,7 @@ public class CreateAccountOperation {
         System.out.println("Account Sucessfully created!");
     }
 
-    public void printCommandInstructions() {
+    private void printCommandInstructions() {
         System.out.println("- Create Account Command:");
         System.out.println("    createAccount <name> <address> <phone_number> <balance>");
         System.out.println("Ex: createAccount \"accountName1\" \"accountAdress1\" 213334567 21,8");

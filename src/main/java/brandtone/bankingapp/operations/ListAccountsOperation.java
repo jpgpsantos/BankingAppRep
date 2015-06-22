@@ -42,7 +42,7 @@ public class ListAccountsOperation {
 
     }
 
-    public void executeCommand() {
+    private void executeCommand() {
         System.out.println("Name || Address || phone_number || Balance ");
         Set<String> keys = AppSession.accountsHashMap.keySet();
         Iterator keysIt = keys.iterator();
@@ -54,7 +54,7 @@ public class ListAccountsOperation {
         System.out.println("----------------------------------------------------------");
     }
 
-    public void printCommandInstructions() {
+    private void printCommandInstructions() {
         System.out.println("---------------------------------------------------------------------");
         System.out.println("- List Accounts Command:");
         System.out.println("    listAccounts");

@@ -41,7 +41,7 @@ public class CreditAccountOperation {
         }
     }
 
-    public void parseCommand() throws ParseCommandException {
+    private void parseCommand() throws ParseCommandException {
         if (commandInputs.size() == 3) {
             this.parsed_name = commandInputs.get(1);
             this.parsed_value = commandInputs.get(2);
@@ -56,7 +56,7 @@ public class CreditAccountOperation {
         }
     }
 
-    public void validateCommand() throws ValidationCommandException {
+    private void validateCommand() throws ValidationCommandException {
 
         this.account = AppSession.accountsHashMap.get(parsed_name);
         if (account == null) {
@@ -65,14 +65,14 @@ public class CreditAccountOperation {
         }
     }
 
-    public void executeCommand() {
+    private void executeCommand() {
         // BigDecimal valueBigDecimal = Utils.convertStringToBigDecimal(value);
         BigDecimal sum = account.getBalance().add(value);
         account.setBalance(sum);
         System.out.println("Account Sucessfully Credited!");
     }
 
-    public void printCommandInstructions() {
+    private void printCommandInstructions() {
         System.out.println("---------------------------------------------------------------------");
         System.out.println("- Credit Account Command:");
         System.out.println("    creditAccount <accountname> <value>");
