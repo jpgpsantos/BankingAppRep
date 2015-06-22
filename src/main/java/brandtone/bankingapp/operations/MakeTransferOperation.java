@@ -8,10 +8,12 @@ package brandtone.bankingapp.operations;
 import brandtone.bankingapp.AppSession;
 import brandtone.bankingapp.Utils;
 import brandtone.bankingapp.domainmodel.Account;
+import brandtone.bankingapp.domainmodel.Transaction;
 import brandtone.bankingapp.exceptions.ParseCommandException;
 import brandtone.bankingapp.exceptions.ValidationCommandException;
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,8 +48,8 @@ public class MakeTransferOperation {
     public void parseCommand() throws ParseCommandException {
         if (commandInputs.size() == 4) {
             this.parsed_source_account = commandInputs.get(1);
-            this.parsed_target_account = commandInputs.get(1);
-            this.parsed_value = commandInputs.get(2);
+            this.parsed_target_account = commandInputs.get(2);
+            this.parsed_value = commandInputs.get(3);
             try {
                 this.value = Utils.convertStringToBigDecimal(parsed_value);
             } catch (ParseException pe) {
@@ -63,7 +65,7 @@ public class MakeTransferOperation {
 
         this.source_account = AppSession.accountsHashMap.get(parsed_source_account);
         if (source_account == null) {
-            System.out.println("Credit not completed: source account do not exists!");
+            System.out.println("Transfer not completed: source account do not exists!");
             throw new ValidationCommandException();
         }
         this.target_account = AppSession.accountsHashMap.get(parsed_target_account);
@@ -74,11 +76,21 @@ public class MakeTransferOperation {
     }
 
     public void executeCommand() {
-        System.out.println("entrou no processCreditAccountCommand com os seguintes inputs:");
         BigDecimal sourceNewBallance = source_account.getBalance().subtract(value);
         source_account.setBalance(sourceNewBallance);
         BigDecimal targetNewBallance = target_account.getBalance().add(value);
         target_account.setBalance(targetNewBallance);
+
+        //add transaction to the list
+        Transaction transaction = new Transaction();
+        transaction.setOperationDate(new Date());
+        transaction.setSourceCustomerAccount(source_account);
+        transaction.setTargetCustomerAccount(target_account);
+        transaction.setValue(value);
+
+        AppSession.transactionsArray.add(transaction);
+        //END: add transaction to the list
+        
         System.out.println("Tranfer executed sucessfully!");
     }
 

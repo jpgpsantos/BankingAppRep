@@ -51,10 +51,11 @@ public class ListAccountsOperation {
             Account currrentAccount = AppSession.accountsHashMap.get(currentKey);
             System.out.println(currrentAccount.getName() + " || " + currrentAccount.getAddress() + " || " + currrentAccount.getPhone_number() + " || " + currrentAccount.getBalance());
         }
+        System.out.println("----------------------------------------------------------");
     }
 
     public void printCommandInstructions() {
-         System.out.println("---------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------");
         System.out.println("- List Accounts Command:");
         System.out.println("    listAccounts");
         System.out.println("---------------------------------------------------------------------");

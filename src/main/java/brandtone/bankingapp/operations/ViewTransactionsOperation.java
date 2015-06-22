@@ -8,6 +8,7 @@ package brandtone.bankingapp.operations;
 import brandtone.bankingapp.AppSession;
 import brandtone.bankingapp.Utils;
 import brandtone.bankingapp.domainmodel.Account;
+import brandtone.bankingapp.domainmodel.Transaction;
 import brandtone.bankingapp.exceptions.ParseCommandException;
 import brandtone.bankingapp.exceptions.ValidationCommandException;
 import java.math.BigDecimal;
@@ -30,8 +31,8 @@ public class ViewTransactionsOperation {
     private Account account;
     private BigDecimal value;
 
-    public ViewTransactionsOperation(List<String> commandInputs) {
-        this.commandInputs = commandInputs;
+    public ViewTransactionsOperation() {
+        // this.commandInputs = commandInputs;
         try {
             this.parseCommand();
             this.validateCommand();
@@ -44,38 +45,26 @@ public class ViewTransactionsOperation {
     }
 
     public void parseCommand() throws ParseCommandException {
-        if (commandInputs.size() == 3) {
-            this.parsed_name = commandInputs.get(1);
-            this.parsed_value = commandInputs.get(2);
-            try {
-                this.value = Utils.convertStringToBigDecimal(parsed_value);
-            } catch (ParseException pe) {
-                throw new ParseCommandException();
-            }
-        } else {
-            this.printCommandInstructions();
-            throw new ParseCommandException();
-        }
     }
 
     public void validateCommand() throws ValidationCommandException {
-
-        this.account = AppSession.accountsHashMap.get(parsed_name);
-        if (account == null) {
-            System.out.println("Credit not completed: account do not exists!");
-            throw new ValidationCommandException();
-        }
     }
 
     public void executeCommand() {
         System.out.println("Source Account || Target Account || amount || Date ");
         Set<String> keys = AppSession.accountsHashMap.keySet();
         Iterator keysIt = keys.iterator();
-        while (keysIt.hasNext()) {
-            String currentKey = (String) keysIt.next();
-            Account currrentAccount = AppSession.accountsHashMap.get(currentKey);
-            System.out.println(currrentAccount.getName() + " || " + currrentAccount.getAddress() + " || " + currrentAccount.getPhone_number() + " || " + currrentAccount.getBalance());
+        for (int i = 0; i < AppSession.transactionsArray.size(); i++) {
+            Transaction currrentTransaction = AppSession.transactionsArray.get(i);
+            System.out.println(currrentTransaction.getSourceCustomerAccount().getName()
+                    + " || "
+                    + currrentTransaction.getTargetCustomerAccount().getName()
+                    + " || "
+                    + currrentTransaction.getValue()
+                    + " || "
+                    + currrentTransaction.getOperationDate());
         }
+        System.out.println("----------------------------------------------------------");
     }
 
     public void printCommandInstructions() {

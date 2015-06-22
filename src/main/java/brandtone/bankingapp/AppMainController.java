@@ -5,7 +5,6 @@
  */
 package brandtone.bankingapp;
 
-import brandtone.bankingapp.domainmodel.Account;
 import brandtone.bankingapp.operations.CreateAccountOperation;
 import brandtone.bankingapp.operations.CreditAccountOperation;
 import brandtone.bankingapp.operations.ListAccountsOperation;
@@ -14,11 +13,8 @@ import brandtone.bankingapp.operations.ViewTransactionsOperation;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -49,20 +45,24 @@ public class AppMainController {
 
         try {
             while ((currentLineInput = br.readLine()) != null) {
+
                 if (!currentLineInput.isEmpty()) {
                     List<String> splited = Utils.splitCommandIntoArray(currentLineInput);
                     if (validComands.containsKey(splited.get(0))) {
                         parseCommand(splited);
 
                     } else {
-
+                        System.out.println("Invalid command!");
+                        printInstructions();
                     }
                 } else {
-                    System.out.println("Invalid command!");
-                    printInstructions();
+                   // System.out.println("Invalid command!");
+                   // printInstructions();
                 }
 //                System.out.print("Enter Integer:");
 //                int i = Integer.parseInt(br.readLine());
+                System.out.println();
+
             }
 
         } catch (NumberFormatException nfe) {
@@ -141,6 +141,8 @@ public class AppMainController {
         System.out.println("    viewTransactions");
         System.out.println("---------------------------------------------------------------------");
 
+
+
     }
 
     private void parseCommand(List<String> splited) {
@@ -166,9 +168,9 @@ public class AppMainController {
         }
 
         if (splited.get(0).equals("viewTransactions")) {
-            ViewTransactionsOperation viewTransactionsOperation = new ViewTransactionsOperation(splited);
+            ViewTransactionsOperation viewTransactionsOperation = new ViewTransactionsOperation();
         }
+
     }
 
 }
-

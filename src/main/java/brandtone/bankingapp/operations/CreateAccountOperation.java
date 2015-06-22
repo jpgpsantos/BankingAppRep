@@ -45,7 +45,6 @@ public class CreateAccountOperation {
 
     private void parseCommand() throws ParseCommandException {
         if (commandInputs.size() == 5) {
-            System.out.println("passou a validacao da conta...vai criar");
             this.accountName = commandInputs.get(1);
             this.address = commandInputs.get(2);
             this.phone_number = commandInputs.get(3);
@@ -69,12 +68,6 @@ public class CreateAccountOperation {
     }
 
     public void executeCommand() {
-        System.out.println("entrou no processCreateAccountCommand com os seguintes inputs:");
-        System.out.print("name:" + this.accountName);
-        System.out.println("address:" + address);
-        System.out.println("phone_number:" + phone_number);
-        System.out.println("balance:" + balance);
-
         Account account = new Account();
         account.setAddress(address);
 
